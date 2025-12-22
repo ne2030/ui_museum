@@ -1,0 +1,103 @@
+---
+title: Vercel Deploy Button
+slug: vercel-deploy-button
+description: A deploy button with elegant loading states inspired by Vercel's minimal aesthetic
+source:
+  designer: Vercel Team
+  designerUrl: https://vercel.com
+  company: Vercel
+  originalUrl: https://vercel.com
+  designSystem: Geist
+theme:
+  background:
+    type: color
+    value: "#000000"
+  colors:
+    primary: "#ffffff"
+    secondary: "#888888"
+    surface: "#111111"
+    text: "#ffffff"
+    muted: "#666666"
+    border: "#333333"
+    accent: "#ffffff"
+  typography:
+    heading:
+      family: Inter
+      weight: 500
+    body:
+      family: Inter
+      weight: 400
+    mono:
+      family: JetBrains Mono
+      weight: 400
+  radius:
+    style: sharp
+    values:
+      sm: "4px"
+      md: "6px"
+      lg: "8px"
+      full: "9999px"
+  effects:
+    shadows: none
+  interactions:
+    hover:
+      scale: 1.0
+      timing: 200
+    click:
+      feedback: none
+  animations:
+    enter:
+      type: fade
+      duration: 300
+  meta:
+    service: Vercel
+    designSystem: Geist
+    era: "2024"
+    philosophy: "Minimal, geometric, monochrome, motion-focused. Let the content breathe."
+    changes: "Moved from subtle grays to pure black and white. Removed unnecessary visual elements."
+tags:
+  - button
+  - deploy
+  - minimal
+  - animation
+category: buttons
+featured: true
+---
+
+export function VercelDeployButton() {
+  return (
+    <div className="w-full max-w-sm mx-auto">
+      <div className="flex flex-col items-center gap-8">
+        {/* Main deploy button */}
+        <button
+          className="group relative flex items-center gap-2 px-6 py-3 bg-white text-black font-medium rounded-lg transition-all hover:bg-gray-100 hover:scale-105 active:scale-95"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 76 65" fill="currentColor">
+            <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+          </svg>
+          <span>Deploy to Vercel</span>
+        </button>
+
+        {/* Secondary buttons */}
+        <div className="flex items-center gap-4">
+          <button className="px-4 py-2 text-white border border-[#333] rounded-lg hover:bg-[#111] transition-colors text-sm">
+            View Docs
+          </button>
+          <button className="px-4 py-2 text-[#888] hover:text-white transition-colors text-sm">
+            Learn more
+          </button>
+        </div>
+
+        {/* Status indicator */}
+        <div className="flex items-center gap-3 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-[#888]">All systems operational</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+<VercelDeployButton />
