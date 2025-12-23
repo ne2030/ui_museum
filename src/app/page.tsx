@@ -272,7 +272,7 @@ export default function GalleryPage() {
               UI Museum — A curated collection of interface design
             </p>
             <p className="text-xs text-[var(--color-muted)]">
-              2024
+              {new Date().getFullYear()}
             </p>
           </div>
         </div>

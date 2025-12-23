@@ -12,6 +12,16 @@ interface MDXRendererProps {
 /**
  * Renders compiled MDX code from Velite
  * Executes the code string and renders the resulting React component
+ *
+ * SECURITY NOTE:
+ * This component uses `new Function()` to execute compiled MDX code.
+ * This is safe in our context because:
+ * 1. Code is compiled by Velite at BUILD TIME from trusted MDX files in content/
+ * 2. No user input or external sources can inject code at runtime
+ * 3. Only pre-vetted MDX content from the repository is executed
+ *
+ * If the content source changes (e.g., CMS, user uploads), this approach
+ * should be replaced with a sandboxed iframe or server-side rendering.
  */
 export function MDXRenderer({ code, className = '' }: MDXRendererProps) {
   const Component = useMemo(() => {

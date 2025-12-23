@@ -50,7 +50,7 @@ const mdxComponents = {
     return (
       <motion.button
         className={`px-4 py-2 rounded-[var(--radius-md)] font-medium transition-colors ${variantStyles[variant]} ${className}`}
-        whileHover={{ scale: 'var(--hover-scale, 1.02)' }}
+        whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
       >

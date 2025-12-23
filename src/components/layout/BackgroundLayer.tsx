@@ -315,13 +315,8 @@ export function BackgroundLayer() {
   useEffect(() => {
     const prevValue = prevBgRef.current;
 
-    console.log('[BG Transition] prevValue:', prevValue);
-    console.log('[BG Transition] bgValue:', bgValue);
-    console.log('[BG Transition] bgType:', bgType);
-
     // Skip if same value
     if (prevValue === bgValue) {
-      console.log('[BG Transition] Same value, skipping');
       return;
     }
 
@@ -331,12 +326,6 @@ export function BackgroundLayer() {
       prevBgRef.current = bgValue;
       return;
     }
-
-    // Test parsing
-    const fromParsed = parseGradient(prevValue);
-    const toParsed = parseGradient(bgValue);
-    console.log('[BG Transition] fromParsed:', fromParsed);
-    console.log('[BG Transition] toParsed:', toParsed);
 
     // Cancel any ongoing animation
     if (animationRef.current) {
@@ -359,7 +348,6 @@ export function BackgroundLayer() {
         animationRef.current = requestAnimationFrame(animate);
       } else {
         // Animation complete
-        console.log('[BG Transition] Animation complete');
         prevBgRef.current = bgValue;
         animationRef.current = null;
       }

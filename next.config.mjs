@@ -16,6 +16,9 @@ const nextConfig = {
     unoptimized: true,
   },
 
+  // Empty turbopack config to silence the warning (we use webpack for Velite)
+  turbopack: {},
+
   // Webpack configuration for Velite
   webpack: (config) => {
     config.plugins.push(new VeliteWebpackPlugin());

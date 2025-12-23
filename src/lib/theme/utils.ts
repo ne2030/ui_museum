@@ -9,7 +9,7 @@ export function mergeThemes(
   target: ExhibitTheme,
   source: Partial<ExhibitTheme>
 ): ExhibitTheme {
-  const result: ExhibitTheme = { ...target };
+  const result = { ...target } as Record<keyof ExhibitTheme, ExhibitTheme[keyof ExhibitTheme]>;
 
   for (const key of Object.keys(source) as Array<keyof ExhibitTheme>) {
     const sourceValue = source[key];
@@ -20,18 +20,16 @@ export function mergeThemes(
       sourceValue !== null &&
       !Array.isArray(sourceValue)
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (result as any)[key] = {
+      result[key] = {
         ...(target[key] as Record<string, unknown>),
         ...(sourceValue as Record<string, unknown>),
-      };
+      } as ExhibitTheme[typeof key];
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (result as any)[key] = sourceValue;
+      result[key] = sourceValue as ExhibitTheme[typeof key];
     }
   }
 
-  return result;
+  return result as ExhibitTheme;
 }
 
 /**
