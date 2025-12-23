@@ -2,7 +2,8 @@
 
 import { motion } from 'motion/react';
 import { useTheme } from '@/lib/theme/engine';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { isAllowedURL } from '@/lib/theme/utils';
+import { useEffect, useRef, useState } from 'react';
 
 // ============================================
 // Types
@@ -367,6 +368,11 @@ export function BackgroundLayer() {
     switch (bgType) {
       case 'image':
       case 'pattern':
+        // Validate URL before using in CSS
+        if (!isAllowedURL(bgValue)) {
+          console.warn(`Blocked unsafe background URL: ${bgValue}`);
+          return { background: '#f5f5f5' };
+        }
         return {
           backgroundImage: `url(${bgValue})`,
           backgroundSize: theme.background?.size || 'cover',
@@ -412,8 +418,8 @@ export function BackgroundLayer() {
         />
       )}
 
-      {/* Video background */}
-      {bgType === 'video' && (
+      {/* Video background - only render if URL is safe */}
+      {bgType === 'video' && isAllowedURL(bgValue) && (
         <video
           className="fixed inset-0 -z-20 w-full h-full object-cover"
           src={bgValue}

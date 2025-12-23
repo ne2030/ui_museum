@@ -150,6 +150,27 @@ export function themeToCSS(theme: ExhibitTheme): Record<string, string> {
 }
 
 /**
+ * Validate URL for safe usage in backgrounds/media
+ * Allows https, http (for local dev), and safe data URIs
+ * Blocks javascript:, data:text/html (XSS vectors)
+ */
+export function isAllowedURL(url: string): boolean {
+  try {
+    // Handle relative URLs and data URIs
+    if (url.startsWith('data:')) {
+      // Block HTML data URIs (XSS vector)
+      return !url.startsWith('data:text/html');
+    }
+
+    const parsed = new URL(url, 'https://placeholder.com');
+    return ['https:', 'http:'].includes(parsed.protocol);
+  } catch {
+    // Invalid URL - block it
+    return false;
+  }
+}
+
+/**
  * Get background CSS value
  */
 export function getBackgroundCSS(bg: ThemeBackground): string {
@@ -159,9 +180,13 @@ export function getBackgroundCSS(bg: ThemeBackground): string {
     case 'gradient':
       return bg.value;
     case 'image':
-      return `url(${bg.value})`;
     case 'pattern':
-      return `url(${bg.value})`;
+      // Validate URL before using in CSS
+      if (isAllowedURL(bg.value)) {
+        return `url(${bg.value})`;
+      }
+      console.warn(`Blocked unsafe background URL: ${bg.value}`);
+      return 'none';
     case 'video':
       return 'transparent'; // Video handled separately
     default:
